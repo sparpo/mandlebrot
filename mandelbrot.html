@@ -25,7 +25,7 @@
     var sketchProc = function(processingInstance) {
 
         with (processingInstance) {
-			size(600, 600); //size of canvas
+			size(900, 900); //size of canvas
 
             frameRate(0); 
 
@@ -38,30 +38,59 @@
             fill(0, 0, 0);
 
             stroke(255, 255, 255);
-			var max = 100;
-			
-			for(var col = 0; col<width;col++) {
-				for(var row = 0; row<height;row++) {
+			var max = 1000;
+            var row = 0;/*
+			for(var row = 0; row<height;row++) {
+				for(var col = 0; col<width;col++) {
 					var cX = (col - width/2)*4/width;
-					var cY = (col - height/2)*4/height;
+					var cY = (row - height/2)*4/height;
 					var n = 0;
 					var x = 0;
 					var y = 0;
-					while(n < max && x*x + y*y <= 4) { //checks if too many iterations have been done and if the distance is greater than 2
-						x = x*x - y*y + cX;
-						y = 2*x*y + cY;
+                    while (n < max && x * x + y * y <= 4) { //checks if the distance to centre is greater than 2
+                        xNew = x * x - y * y + cX; //real-coordinate
+                        y = 2 * x * y + cY; //imaginary-coordinate
+                        x = xNew;
 						n++;
-					}
+                    }
+                    //console.log(n);
 					if(n < max) {
-					fill(0,0,0);
-					stroke(0,0,0);
+                    //fill(255, 255, 255);
+                    stroke(1/n, n, n*n*2);
 					} else {
-					fill(255,255,255);
-					stroke(255,255,255);
+                    fill(0, 0, 0);
+                    stroke(255, 255, 255);
 					}
 					point(col,row);
 				}
-			}
+            }*/
+            draw = function () {
+                if (row < height) {
+                    for (var col = 0; col < width; col++) {
+                        var cX = (col - width / 2) * 4 / width;
+                        var cY = (row - height / 2) * 4 / height;
+                        var n = 0;
+                        var x = 0;
+                        var y = 0;
+                        while (n < max && x * x + y * y <= 4) { //checks if the distance to centre is greater than 2
+                            xNew = x * x - y * y + cX; //real-coordinate
+                            y = 2 * x * y + cY; //imaginary-coordinate
+                            x = xNew;
+                            n++;
+                        }
+                        //console.log(n);
+                        if (n < max) {
+                            //fill(255, 255, 255);
+                            stroke(1 / n, n, n * n * 2);
+                        } else {
+                            fill(0, 0, 0);
+                            stroke(255, 255, 255);
+                        }
+                        point(col, row);
+                    }
+                }
+                row++;
+            }
         }
 
     };
